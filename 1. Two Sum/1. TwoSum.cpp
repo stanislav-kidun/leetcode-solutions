@@ -1,21 +1,21 @@
-#include <iostream>
+// https://leetcode.com/problems/two-sum/
+
 #include <vector>
+#include <unordered_map>
 
-std::vector<int> code() {
-  std::vector<int> nums = {3, 2, 4};
-  int target = 6;
+class Solution {
+public:
+    std::vector<int> twoSum(std::vector<int>& nums, int target) {
+        std::unordered_map<int, int> map;
 
-  if (nums.size() == 2) return {0, 1};
+        for(size_t i = 0; i < nums.size(); ++i) {
+            int num = nums[i];
+            if(map.contains(target - num)) {
+                return {static_cast<int>(i), map[target - num]};
+            }
+            map[num] = i;
+        }
 
-  for (int i = 0; i < nums.size(); ++i)
-    for (int j = i + 1; j < nums.size(); ++j) {
-      if (nums[i] + nums[j] == target) return {i, j};
+        return {-1, -1};
     }
-
-  return {0, 0};
-}
-
-int main() {
-  std::cout << code()[1] << ' ' << code()[2];
-  return 0;
-}
+};
