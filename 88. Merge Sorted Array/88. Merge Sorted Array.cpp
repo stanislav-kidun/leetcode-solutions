@@ -1,36 +1,35 @@
 // https://leetcode.com/problems/merge-sorted-array/description/
 
 #include <vector>
+#include <stdio.h>
 
 class Solution {
-    std::vector<int> sorted;
-
-    void Append(std::vector<int>& nums, size_t start, size_t size) {
-        while(start < size) {
-            sorted.push_back(nums[start]);
-            ++start;
-        }
-    }
-
 public:
     void merge(std::vector<int>& nums1, int m, std::vector<int>& nums2, int n) {
-        size_t i = 0;
-        size_t j = 0;
-        while(i < m && j < n) {
-            if(nums1[i] <= nums2[j]) {
-                sorted.push_back(nums1[i]);
-                ++i;
+        ssize_t i = m - 1;
+        ssize_t j = n - 1;
+        ssize_t pos = n + m - 1;
+        while(i >= 0 && j >= 0) {
+            if(nums1[i] > nums2[j]) {
+                nums1[pos] = nums1[i];
+                --i;
             } else {
-                sorted.push_back(nums2[j]);
-                ++j;
+                nums1[pos] = nums2[j];
+                --j;
             }
+            --pos;
         }
 
-        Append(nums1, i, m);
-        Append(nums2, j, n);
+        while (i >= 0) {
+            nums1[pos] = nums1[i];
+            --i;
+            --pos;
+        }
 
-        for(size_t i = 0; i < n + m; ++i) {
-            nums1[i] = sorted[i];
+        while (j >= 0) {
+            nums1[pos] = nums2[j];
+            --j;
+            --pos;
         }
     }
 };
